@@ -1,0 +1,1 @@
+insert into contacts(name,address,telephone) values ('Artur','11 Listopada','532111969');

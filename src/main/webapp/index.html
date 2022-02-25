@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your delivery</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
+          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+
+    <style>
+        input{
+            margin-top: 10px;
+        }
+        button#btn{
+            border-radius: 5px;
+            width: 200px;
+            margin: auto;
+            margin-top: 20px;
+        }
+        img{
+            display: block;
+            border-radius: 10px;
+            width: 600px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+        form#welcomeForm{
+            font-size: 20px;
+            font-family: Arial;
+        }
+    </style>
+<head>
+<body>
+<main>
+    <div id="welcomeText" style="width: 50%; margin: 0 auto;text-align: center">
+        <img src="tlo.jpg">
+        <h1>ENTER YOUR CONTACT DETAILS</h1>
+    </div>
+
+    <form id="welcomeForm" class="pure-form pure-g pure-form-aligned">
+        <fieldset style="width: 50%; margin: 0 auto; text-align: center;">
+            <input class="pure-input-rounded pure-u-1" name="name" placeholder="Your name">
+            <input class="pure-input-rounded pure-u-1" name="address" placeholder="Address">
+            <input class="pure-input-rounded pure-u-1" name="telephone" placeholder="Telephone +48">
+            <button id="btn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+        </fieldset>
+        <fieldset id="allTodos"></fieldset>
+    </form>
+
+</main>
+<script>
+    (function () {
+        const API_URL = 'http://localhost:8080/contact';
+
+        const nameText = document.getElementById('name');
+        const address = document.getElementById('address');
+        const telephoneText = document.getElementById('telephone');
+
+
+        document.getElementById('btn').addEventListener('click', (event) => {
+            event.preventDefault();
+            fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: nameText.value,
+                    address: address.value,
+                    telephone: telephoneText.value
+                })
+            })
+                .then(processOkResponse)
+                .then(() => nameText.value = '').then(() => address.value = '').then(() => telephoneText.value = '')
+                .then(createContact)
+                .catch(console.warn);
+        });
+
+        function createContact() {
+            const label = document.createElement('label');
+            label.classList.add('name');
+            label.classList.add('addressText');
+            label.classList.add('telephone');
+            document.getElementById('btn').addEventListener('click', (event) => {
+                event.preventDefault();
+            });
+            label.appendChild(document.createTextNode(` ${nameText.text}`));
+            label.appendChild(document.createTextNode(` ${address.text}`));
+            label.appendChild(document.createTextNode(` ${telephoneText.text}`));
+            document.getElementById('allTodos').appendChild(label);
+        }
+
+        function processOkResponse(response = {}) {
+            if (response.ok) {
+                return response.json();}
+            throw new Error(`Status not 200 (${response.status})`);
+        }
+    })();
+
+</script>
+</body>
+</html>
