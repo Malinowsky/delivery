@@ -43,7 +43,7 @@
             <input class="pure-input-rounded pure-u-1" name="name" placeholder="Your name">
             <input class="pure-input-rounded pure-u-1" name="address" placeholder="Address">
             <input class="pure-input-rounded pure-u-1" name="telephone" placeholder="Telephone +48">
-            <button id="btn" class="pure-button pure-button-primary pure-u-1">Submit</button>
+            <button id="btn"  class="pure-button pure-button-primary pure-u-1">Submit</button>
         </fieldset>
         <fieldset id="allTodos"></fieldset>
     </form>
@@ -56,7 +56,9 @@
         const nameText = document.getElementById('name');
         const address = document.getElementById('address');
         const telephoneText = document.getElementById('telephone');
-
+        console.log(nameText);
+        console.log(address);
+        console.log(telephoneText);
 
         document.getElementById('btn').addEventListener('click', (event) => {
             event.preventDefault();
@@ -77,7 +79,7 @@
                 .then(createContact)
                 .catch(console.warn);
         });
-
+        console.log(API_URL);
         function createContact() {
             const label = document.createElement('label');
             label.classList.add('name');

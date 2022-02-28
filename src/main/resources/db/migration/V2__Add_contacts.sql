@@ -1,1 +1,1 @@
-insert into contacts(name,address,telephone) values ('Artur','11 Listopada','532111969');
+insert into contacts(id,name,address,telephone) values (1,'Artur','11 Listopada','532111969');

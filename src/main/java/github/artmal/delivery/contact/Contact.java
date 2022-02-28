@@ -13,12 +13,27 @@ class Contact {
     @Id
     @GeneratedValue(generator = "inc")
     @GenericGenerator(name = "inc", strategy = "increment")
+    private Long id;
+
     private String name;
     private String address;
     private String telephone;
 
     Contact(){
 
+    }
+
+    public Contact(Long id, String name, String address, String telephone) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.telephone = telephone;
+    }
+
+    public Contact(String name, String address, String telephone) {
+        this.name = name;
+        this.address = address;
+        this.telephone = telephone;
     }
 
     public String getName() {
@@ -43,5 +58,17 @@ class Contact {
 
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
