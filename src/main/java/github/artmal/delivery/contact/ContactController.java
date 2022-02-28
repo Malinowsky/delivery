@@ -10,12 +10,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/contact")
-class ContactServlet{
-    private final Logger logger = LoggerFactory.getLogger(ContactServlet.class);
+class ContactController {
+    private final Logger logger = LoggerFactory.getLogger(ContactController.class);
 
     private ContactRepository repository;
 
-    ContactServlet(ContactRepository repository) {
+    ContactController(ContactRepository repository) {
         this.repository = repository;
     }
 
@@ -23,6 +23,16 @@ class ContactServlet{
     ResponseEntity<List<Contact>> findAllContacts() {
         logger.info("Got request");
         return ResponseEntity.ok(repository.findAll());
+    }
+
+    @PutMapping
+    @Transactional
+    ResponseEntity<Contact> toggleContact(@PathVariable String name){
+        var contact = repository.findById(name);
+        contact.ifPresent(c -> {
+            repository.save(c);
+        });
+        return contact.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

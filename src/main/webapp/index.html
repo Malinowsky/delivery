@@ -49,56 +49,6 @@
     </form>
 
 </main>
-<script>
-    (function () {
-        const API_URL = 'http://localhost:8080/contact';
-
-        const nameText = document.getElementById('name');
-        const address = document.getElementById('address');
-        const telephoneText = document.getElementById('telephone');
-
-
-        document.getElementById('btn').addEventListener('click', (event) => {
-            event.preventDefault();
-            fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: nameText.value,
-                    address: address.value,
-                    telephone: telephoneText.value
-                })
-            })
-                .then(processOkResponse)
-                .then(() => nameText.value = '').then(() => address.value = '').then(() => telephoneText.value = '')
-                .then(createContact)
-                .catch(console.warn);
-        });
-
-        function createContact() {
-            const label = document.createElement('label');
-            label.classList.add('name');
-            label.classList.add('addressText');
-            label.classList.add('telephone');
-            document.getElementById('btn').addEventListener('click', (event) => {
-                event.preventDefault();
-            });
-            label.appendChild(document.createTextNode(` ${nameText.text}`));
-            label.appendChild(document.createTextNode(` ${address.text}`));
-            label.appendChild(document.createTextNode(` ${telephoneText.text}`));
-            document.getElementById('allTodos').appendChild(label);
-        }
-
-        function processOkResponse(response = {}) {
-            if (response.ok) {
-                return response.json();}
-            throw new Error(`Status not 200 (${response.status})`);
-        }
-    })();
-
 </script>
 </body>
 </html>
