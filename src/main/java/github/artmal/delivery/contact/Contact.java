@@ -1,6 +1,5 @@
 package github.artmal.delivery.contact;
 
-import jdk.jfr.Name;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
